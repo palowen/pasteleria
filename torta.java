@@ -45,7 +45,7 @@ public class torta {
             grinch.nextLine();
             switch (opcion){
                 case 1:
-                    this.ComprarMenu();
+                    this.Comprartorta();
                     break;
 
                 case 2:
@@ -77,7 +77,7 @@ public class torta {
 
 
 
-    public void ComprarMenu() {
+    public void Comprartorta() {
         Scanner sc = new Scanner(System.in);
         System.out.println("------- TORTAS -------");
         System.out.println("Las Tortas disponibles el día de hoy:");
@@ -103,7 +103,7 @@ public class torta {
         int respuesta = sc.nextInt();
 
         if (respuesta == 1) {
-            ComprarMenu();
+            Comprartorta();
         } else if (respuesta == 2) {
             PagoMenus();
         } else {
@@ -238,12 +238,12 @@ public class torta {
                             System.out.println("Ud ya compro la torta: "+tortas);
                         }
                         else if(montopagar>1){
-                            double vuelto=montopagar-100;
+                            double vuelto=montopagar-50;
                             System.out.println("Ud ya compro la torta:"+tortas);
                             System.out.println("Su vuelto es: "+vuelto);
                         }
-                        else if(montopagar<930&&montopagar>0){
-                            double añadir= 930-montopagar;
+                        else if(montopagar<50&&montopagar>0){
+                            double añadir= 50-montopagar;
                             System.out.println("Monto insuficiente, añadir "+añadir);
                         }
                         else {
@@ -279,10 +279,13 @@ public class torta {
 
         double subtotal0= (cantidadtotalmenus*precio[0])+subtotalextra;
         igv= subtotal0*precio[1];
+        subtotal=preciosTortas[1];
         subtotal=subtotal0-igv;
+
+
         totalpagar=subtotal+igv;
         System.out.println("----BOLETA DE VENTA---------");
-        System.out.println(" SUBTOTAL :"+subtotal);
+        System.out.println(" SUBTOTAL :"+totalpagar);
         System.out.println(" IGV :"+igv);
         System.out.println(" TOTAL :"+totalpagar);
         this.ExportarBoleta();
@@ -309,7 +312,7 @@ public class torta {
                 if(opcion==1)
                 {
                     System.out.println("Volviendo a la opción de compra");
-                    this.ComprarMenu();
+                    this.Comprartorta();
                 }
                 else if (opcion==2){
                     this.PagoMenus();
@@ -336,7 +339,7 @@ public class torta {
                 if(opcion==1)
                 {
                     System.out.println("Volviendo a la opción de compra");
-                    this.ComprarMenu();
+                    this.Comprartorta();
                 }
                 else if (opcion==2){
                     this.PagoMenus();
@@ -364,7 +367,7 @@ public class torta {
                 if(opcion==1)
                 {
                     System.out.println("Volviendo a la opción de compra");
-                    this.ComprarMenu();
+                    this.Comprartorta();
                 }
                 else if (opcion==2){
                     this.PagoMenus();
@@ -392,7 +395,7 @@ public class torta {
                 if(opcion==1)
                 {
                     System.out.println("Volviendo a la opción de compra");
-                    this.ComprarMenu();
+                    this.Comprartorta();
                 }
                 else if (opcion==2){
                     this.PagoMenus();
