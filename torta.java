@@ -13,10 +13,10 @@ public class torta {
     String [] extras={"pan de leche", "pan sarnitas", "pan chachitos", "pan carioca"};
 
 
-    double[] preciosTortas = {30.0, 40.0, 35.0, 45.0};
+    double[] preciosTortas = {50, 60, 55, 60};
     double[] preciosTamanos = {0.0, 10.0, 20.0};
     String[] nombresTortas = {"TORTA TRES LECHES s/50", "TORTA SELVA NEGRA s/60", "TORTA DE CHOCOLATE s/55", "TORTA DE CHOLATE Y VAINILLA s/60"};
-    String[] nombresTamanos = {"pequeño", "mediano", "grande"};
+    String[] nombresTamanos = {"pequeño + s/00", "mediano + s/10", "grande + s/20"};
 
     Random random = new Random();
 
@@ -25,7 +25,9 @@ public class torta {
     double[] subtotal_extra={0,0,0,0};
     double igv, subtotal,totalpagar;
     int [] carrito =new int[tortas.length];
+    int[] carritoTamano = new int[tortas.length];
     int [] carrito_extra=new int[extras.length];
+    int[] cantidadPorTorta = new int[tortas.length];
     String respuesta;
     int opcion, cantidad;
 
@@ -39,7 +41,7 @@ public class torta {
             System.out.println("---------Bienvenido a la pasteleria-----------");
             System.out.println("Marque alguna de las siguientes opciones");
             System.out.println(" 1.- TORTA Y PASTELES");
-            System.out.println(" 2.- POSTRES");
+            System.out.println(" 2.- panaderia");
             System.out.println(" 3.- Libro de reclamaciones");
             opcion=grinch.nextInt();
             grinch.nextLine();
@@ -98,6 +100,10 @@ public class torta {
 
         double precioTotal = (preciosTortas[opcionTorta] + preciosTamanos[opcionTamano]) * cantidad;
         subtotal += precioTotal;
+        carrito[opcionTorta] += cantidad;
+        carritoTamano[opcionTorta] = opcionTamano;
+        cantidadPorTorta[opcionTorta] = cantidad;
+
         System.out.println("Ud ha pedido " + cantidad + " torta de " + nombresTortas[opcionTorta] + " (" + nombresTamanos[opcionTamano] + ")");
         System.out.println("Desea elegir otro menú más? 1 SI/ 2 NO/ 3 Menu Principal");
         int respuesta = sc.nextInt();
@@ -217,79 +223,75 @@ public class torta {
 
     }
 
-    public double PagoMenus(){
-        System.out.println("Elija las opcion:");
-        System.out.println(" Marque 1 : Si esta seguro de comprar la torta");
+    public void PagoMenus() {
+        System.out.println("----BOLETA DE VENTA---------");
+        System.out.println("Detalles de su compra:");
+        for (int i = 0; i < tortas.length; i++) {
+            if (carrito[i] > 0) {
+                double precioItem = (preciosTortas[i] + preciosTamanos[carritoTamano[i]]) * carrito[i];
+                System.out.println("Torta: " + nombresTortas[i]);
 
-        int opcion= grinch.nextInt();
-        switch (opcion){
+                System.out.println("Tamaño: " + nombresTamanos[carritoTamano[i]]);
+
+                System.out.println("Cantidad: " + carrito[i]);
+                System.out.println("subtotal: " + precioItem);
+                System.out.println(" " +
+                        "       ,   ,   ,\n" +
+                        "      /|  /|  /|\n" +
+                        "     / | / | / |\n" +
+                        "    *--|--*--|--*   \n" +
+                        "    |  |  |  |  |  \n" +
+                        "    |  |  |  |  |  \n" +
+                        "    *--*--*--*--*\n");
+            }
+        }
+
+        igv = subtotal * precio[1];
+        totalpagar = subtotal + igv;
+        System.out.println("SUBTOTAL: " + subtotal);
+        System.out.println("IGV: " + igv);
+        System.out.println("TOTAL: " + totalpagar);
+
+        System.out.println("Seleccione su método de pago");
+        System.out.println("Opción 1: Efectivo");
+        System.out.println("Opción 2: Tarjeta");
+        int opcpago = grinch.nextInt();
+        grinch.nextLine();
+
+        switch (opcpago) {
             case 1:
-                System.out.println("Ud eligio para el pago"+opcion);
-                System.out.println("El monto a pagar es  soles");
-                System.out.println("Seleccione su método de pago");
-                System.out.println("Opcion 1 Efectivo");
-                System.out.println("Opcion 2 Tarjeta");
-                int opcpago= grinch.nextInt();
-                switch(opcpago){
-                    case 1:
-                        System.out.println("Ingrese el monto a pagar");
-                        double montopagar= grinch.nextDouble();
-                        if(montopagar==preciosTortas [1] ){
-                            System.out.println("Ud ya compro la torta: "+tortas);
-                        }
-                        else if(montopagar>1){
-                            double vuelto=montopagar-50;
-                            System.out.println("Ud ya compro la torta:"+tortas);
-                            System.out.println("Su vuelto es: "+vuelto);
-                        }
-                        else if(montopagar<50&&montopagar>0){
-                            double añadir= 50-montopagar;
-                            System.out.println("Monto insuficiente, añadir "+añadir);
-                        }
-                        else {
-                            System.out.println("Monto no válido");
-                        }
-                        break;
+                System.out.println("Ingrese el monto a pagar:");
+                double montopagar = grinch.nextDouble();
+                if (montopagar >= totalpagar) {
+                    double vuelto = montopagar - totalpagar;
+                    System.out.println("Pago exitoso. Su vuelto es: " + vuelto);
+                } else {
+                    System.out.println("Monto insuficiente. Falta: " + (totalpagar - montopagar));
+                }
+                break;
 
-                    case 2:
-                        grinch.nextLine();
-                        System.out.println("Ingrese los 16 dígitos de su tarjeta XXXX XXXX XXXX XXXX ");
-                        String tarjeta= grinch.nextLine().trim();
-                        if(tarjeta.length()==19||tarjeta.matches("[4-5]\\d{3}\\d{4}\\d{4}\\d{4}")){
-                            System.out.println("Tarjeta valida");
-                            System.out.println("Ingrese los 3 dígitos del CVV");
-                            String cvv=grinch.nextLine().trim();
-                            if(cvv.length()==3||cvv.matches("\\d{3}")){
-                                System.out.println("CVV Válido, pago realizado exitosamente");
-                                System.out.println("Ud está torta al menus:"+tortas);
-                            }
-                        }
-                        else{
-                            System.out.println("Tarjeta no válida");
-                        }
-
-                        break;
-                    default:
+            case 2:
+                grinch.nextLine();
+                System.out.println("Ingrese los 16 dígitos de su tarjeta XXXX XXXX XXXX XXXX ");
+                String tarjeta= grinch.nextLine().trim();
+                if(tarjeta.length()==19||tarjeta.matches("[4-5]\\d{3}\\d{4}\\d{4}\\d{4}")){
+                    System.out.println("Tarjeta valida");
+                    System.out.println("Ingrese los 3 dígitos del CVV");
+                    String cvv=grinch.nextLine().trim();
+                    if(cvv.length()==3||cvv.matches("\\d{3}")){
+                        System.out.println("CVV Válido, pago realizado exitosamente");
+                        System.out.println("Usted ya compro :"+tortas);
+                    }
+                }
+                else{
+                    System.out.println("Tarjeta no válida");
                 }
 
                 break;
+            default:
         }
-        double cantidadtotalmenus=Arrays.stream(carrito).sum();
-        double subtotalextra=Arrays.stream(subtotal_extra).sum();
 
-        double subtotal0= (cantidadtotalmenus*precio[0])+subtotalextra;
-        igv= subtotal0*precio[1];
-        subtotal=preciosTortas[1];
-        subtotal=subtotal0-igv;
-
-
-        totalpagar=subtotal+igv;
-        System.out.println("----BOLETA DE VENTA---------");
-        System.out.println(" SUBTOTAL :"+totalpagar);
-        System.out.println(" IGV :"+igv);
-        System.out.println(" TOTAL :"+totalpagar);
-        this.ExportarBoleta();
-        return totalpagar;
+        ExportarBoleta();
     }
     public String ComprarExtra(){
         System.out.println("------ MENÚS DEL DÍA------------");
