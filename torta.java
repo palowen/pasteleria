@@ -15,6 +15,7 @@ public class torta {
 
     double[] preciosTortas = {50, 60, 55, 60};
     double[] preciosTamanos = {0.0, 10.0, 20.0};
+    double[] preciosExtras = {0.5, 0.5, 0.5, 0.5};
     String[] nombresTortas = {"TORTA TRES LECHES s/50", "TORTA SELVA NEGRA s/60", "TORTA DE CHOCOLATE s/55", "TORTA DE CHOLATE Y VAINILLA s/60"};
     String[] nombresTamanos = {"pequeño + s/00", "mediano + s/10", "grande + s/20"};
 
@@ -117,110 +118,6 @@ public class torta {
         }
 
 
-
-
-
-
-        opcion= grinch.nextInt();
-        grinch.nextLine();
-        switch (opcion){
-
-            case 1:
-                System.out.println("¿Cuantos comprará? Ingrese la cantidad");
-                cantidad=grinch.nextInt();
-                carrito[0]+=cantidad;
-                System.out.println("Ud ha pedido "+carrito[0]+ "platos de "+tortas[0]);
-                System.out.println("¿Desea elegir otro menú más?  1 SI/ 2 NO / 3 Menu Principal");
-                opcion=grinch.nextInt();
-                grinch.nextLine();
-                if(opcion==1)
-                {
-                    System.out.println("Volviendo a la opción de compra");
-                    this.ComprarExtra();
-                }
-                else if (opcion==2){
-                    this.PagoMenus();
-                }
-                else if (opcion==3){
-                    this.MenuPrincipal();
-                }
-                else
-                {
-                    System.out.println("Opcion no válida");
-                }
-
-                break;
-
-            case 2:
-                System.out.println("¿Cuantos comprará? Ingrese la cantidad");
-                cantidad=grinch.nextInt();
-                carrito[1]+=cantidad;
-                System.out.println("Ud ha pedido "+carrito[1]+ "torta de "+tortas[1]);
-
-                System.out.println("¿Desea elegir otro menú más?  1 SI/ 2 NO / 3 Menu Principal");
-                opcion=grinch.nextInt();
-                grinch.nextLine();
-                if(opcion==1)
-                {
-                    System.out.println("Volviendo a la opción de compra");
-                    this.ComprarExtra();
-                }
-                else if (opcion==2){
-                    this.PagoMenus();
-                }
-                else if (opcion==3){
-                    this.MenuPrincipal();
-                }
-                else
-                {
-                    System.out.println("Opcion no válida");
-                }
-
-                break;
-
-            case 3:
-                System.out.println("¿Cuantos comprará? Ingrese la cantidad");
-                cantidad=grinch.nextInt();
-
-                carrito[2]+=cantidad;
-                System.out.println("Ud ha pedido "+carrito[2]+ "tortas "+tortas[2]);
-
-                System.out.println("¿Desea elegir otro menú más?  1 SI/ 2 NO / 3 Menu Principal");
-                opcion=grinch.nextInt();
-                grinch.nextLine();
-                if(opcion==1)
-                {
-                    System.out.println("Volviendo a la opción de compra");
-                    this.ComprarExtra();
-                }
-                else if (opcion==2){
-                    this.PagoMenus();
-                }
-                else if (opcion==3){
-                    this.MenuPrincipal();
-                }
-                else
-                {
-                    System.out.println("Opcion no válida");
-                }
-
-
-                break;
-
-            default:
-                System.out.println("Opcion no válida");
-                this.MenuPrincipal();
-                break;
-
-
-        }
-
-
-
-
-
-        return ;
-
     }
 
     public void PagoMenus() {
@@ -245,6 +142,16 @@ public class torta {
                         "    *--*--*--*--*\n");
             }
         }
+        for (int i = 0; i < extras.length; i++) {
+            if (carrito_extra[i] > 0) {
+                double precioItem = carrito_extra[i] * preciosExtras[i];
+                System.out.println("Extra: " + extras[i]);
+                System.out.println("Cantidad: " + carrito_extra[i]);
+                System.out.println("Precio: " + precioItem);
+            }
+        }
+        subtotal = Arrays.stream(carrito).mapToDouble(i -> (preciosTortas[i] + preciosTamanos[carritoTamano[i]]) * i).sum() +
+                Arrays.stream(subtotal_extra).sum();
 
         igv = subtotal * precio[1];
         totalpagar = subtotal + igv;
@@ -301,126 +208,34 @@ public class torta {
         }
         opcion= grinch.nextInt();
         grinch.nextLine();
-        switch (opcion){
-            case 1:
-                System.out.println("¿Cuantos comprará? Ingrese la cantidad");
-                cantidad=grinch.nextInt();
-                carrito_extra[0]+=cantidad;
-                System.out.println("Ud ha pedido "+carrito_extra[0]+ "platos de "+extras[0]);
-                subtotal_extra[0]=carrito_extra[0]*precio[2];
-                System.out.println("¿Desea elegir otro menú más?  1 SI/ 2 NO / 3 Menu Principal");
-                opcion=grinch.nextInt();
-                grinch.nextLine();
-                if(opcion==1)
-                {
-                    System.out.println("Volviendo a la opción de compra");
-                    this.Comprartorta();
-                }
-                else if (opcion==2){
-                    this.PagoMenus();
-                }
-                else if (opcion==3){
-                    this.MenuPrincipal();
-                }
-                else
-                {
-                    System.out.println("Opcion no válida");
-                }
+        if (opcion > 0 && opcion <= extras.length) {
+            System.out.println("¿Cuántos comprará? Ingrese la cantidad:");
+            cantidad = grinch.nextInt();
+            grinch.nextLine();
 
-                break;
+            carrito_extra[opcion - 1] += cantidad;
+            subtotal_extra[opcion - 1] = carrito_extra[opcion - 1] * preciosExtras[opcion - 1];
+            System.out.println("Ud ha pedido " + carrito_extra[opcion - 1] + " " + extras[opcion - 1]);
 
-            case 2:
-                System.out.println("¿Cuantos comprará? Ingrese la cantidad");
-                cantidad=grinch.nextInt();
-                carrito_extra[1]+=cantidad;
-                System.out.println("Ud ha pedido "+carrito_extra[1]+ "platos de "+extras[1]);
-                subtotal_extra[1]=carrito_extra[1]*precio[3];
-                System.out.println("¿Desea elegir otro menú más?  1 SI/ 2 NO / 3 Menu Principal");
-                opcion=grinch.nextInt();
-                grinch.nextLine();
-                if(opcion==1)
-                {
-                    System.out.println("Volviendo a la opción de compra");
-                    this.Comprartorta();
-                }
-                else if (opcion==2){
-                    this.PagoMenus();
-                }
-                else if (opcion==3){
-                    this.MenuPrincipal();
-                }
-                else
-                {
-                    System.out.println("Opcion no válida");
-                }
-
-                break;
-
-            case 3:
-                System.out.println("¿Cuantos comprará? Ingrese la cantidad");
-                cantidad=grinch.nextInt();
-
-                carrito_extra[2]+=cantidad;
-                System.out.println("Ud ha pedido "+carrito_extra[2]+ "platos de "+extras[2]);
-                subtotal_extra[2]=carrito_extra[2]*precio[4];
-                System.out.println("¿Desea elegir otro menú más?  1 SI/ 2 NO / 3 Menu Principal");
-                opcion=grinch.nextInt();
-                grinch.nextLine();
-                if(opcion==1)
-                {
-                    System.out.println("Volviendo a la opción de compra");
-                    this.Comprartorta();
-                }
-                else if (opcion==2){
-                    this.PagoMenus();
-                }
-                else if (opcion==3){
-                    this.MenuPrincipal();
-                }
-                else
-                {
-                    System.out.println("Opcion no válida");
-                }
-
-
-                break;
-            case 4:
-                System.out.println("¿Cuantos comprará? Ingrese la cantidad");
-                cantidad=grinch.nextInt();
-
-                carrito_extra[3]+=cantidad;
-                System.out.println("Ud ha pedido "+carrito_extra[2]+ "platos de "+extras[3]);
-                subtotal_extra[3]=carrito_extra[3]*precio[5];
-                System.out.println("¿Desea elegir otro menú más?  1 SI/ 2 NO / 3 Menu Principal");
-                opcion=grinch.nextInt();
-                grinch.nextLine();
-                if(opcion==1)
-                {
-                    System.out.println("Volviendo a la opción de compra");
-                    this.Comprartorta();
-                }
-                else if (opcion==2){
-                    this.PagoMenus();
-                }
-                else if (opcion==3){
-                    this.MenuPrincipal();
-                }
-                else
-                {
-                    System.out.println("Opcion no válida");
-                }
-
-
-                break;
-
-
-            default:
-                System.out.println("Opcion no válida");
+            System.out.println("¿Desea elegir otro menú más? 1 SI/ 2 NO / 3 Menu Principal");
+            opcion = grinch.nextInt();
+            grinch.nextLine();
+            if (opcion == 1) {
+                System.out.println("Volviendo a la opción de compra");
+                this.ComprarExtra();
+            } else if (opcion == 2) {
+                this.PagoMenus();
+            } else if (opcion == 3) {
                 this.MenuPrincipal();
-                break;
-
-
+            } else {
+                System.out.println("Opción no válida");
+            }
+        } else {
+            System.out.println("Opción no válida");
+            this.MenuPrincipal();
         }
+
+
 
 
 
@@ -429,21 +244,38 @@ public class torta {
         return null;
     }
 
-    public String ExportarBoleta() {
+    public void ExportarBoleta() {
         try {
-            File archivo = new File("boleta.txt");
-            FileWriter escritor = new FileWriter(archivo);
-            escritor.write("----BOLETA DE VENTA---------\n");
-            escritor.write(" SUBTOTAL : " + subtotal + "\n");
-            escritor.write(" IGV : " + igv + "\n");
-            escritor.write(" TOTAL : " + totalpagar + "\n");
-            escritor.close();
+            FileWriter writer = new FileWriter("boleta.txt");
+            writer.write("----BOLETA DE VENTA---------\n");
+            writer.write("Detalles de su compra:\n");
+            for (int i = 0; i < tortas.length; i++) {
+                if (carrito[i] > 0) {
+                    double precioItem = (preciosTortas[i] + preciosTamanos[carritoTamano[i]]) * carrito[i];
+                    writer.write("Torta: " + tortas[i] + "\n");
+                    writer.write("Tamaño: " + nombresTamanos[carritoTamano[i]] + "\n");
+                    writer.write("Cantidad: " + carrito[i] + "\n");
+                    writer.write("Precio: " + precioItem + "\n");
+                }
+            }
+            for (int i = 0; i < extras.length; i++) {
+                if (carrito_extra[i] > 0) {
+                    double precioItem = carrito_extra[i] * preciosExtras[i];
+                    writer.write("Extra: " + extras[i] + "\n");
+                    writer.write("Cantidad: " + carrito_extra[i] + "\n");
+                    writer.write("Precio: " + precioItem + "\n");
+                }
+            }
+
+            writer.write("SUBTOTAL: " + subtotal + "\n");
+            writer.write("IGV: " + igv + "\n");
+            writer.write("TOTAL: " + totalpagar + "\n");
+            writer.close();
             System.out.println("Boleta exportada exitosamente.");
         } catch (IOException e) {
-            System.out.println("Error al exportar la factura.");
+            System.out.println("Ocurrió un error al exportar la boleta.");
             e.printStackTrace();
         }
-        return null;
     }
 
     public static void main(String [] args){
