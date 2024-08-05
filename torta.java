@@ -7,15 +7,16 @@ import java.io.IOException;
 
 public class torta {
     Scanner grinch= new Scanner(System.in);
-    String[] credenciales = {"paul owen","p","1"};
+
+    String[] credenciales = new String[3];
 
     String [] tortas={"TORTA TRES LECHE" ,"TORTA SELVA NEGRA", "TORTA DE CHOCOLAYR", "TORTA DE CHOLATE Y VAINILLA"};
     String [] extras={"pan de leche", "pan sarnitas", "pan chachitos", "pan carioca"};
 
 
-    double[] preciosTortas = {50, 60, 55, 60};
+    double[] preciosTortas = {42.37, 50.85, 46.61, 50.85};
     double[] preciosTamanos = {0.0, 10.0, 20.0};
-    double[] preciosExtras = {0.5, 0.5, 0.5, 0.5};
+    double[] preciosExtras = {0.4238, 0.4238, 0.4238, 0.4238};
     String[] nombresTortas = {"TORTA TRES LECHES s/50", "TORTA SELVA NEGRA s/60", "TORTA DE CHOCOLATE s/55", "TORTA DE CHOLATE Y VAINILLA s/60"};
     String[] nombresTamanos = {"pequeño + s/00", "mediano + s/10", "grande + s/20"};
 
@@ -32,13 +33,62 @@ public class torta {
     String respuesta;
     int opcion, cantidad;
 
-    public String MenuPrincipal(){
+    public void MenuPrincipal() {
+        System.out.println("---------Bienvenido a la pastelería-----------");
+        System.out.println("1. Iniciar sesión");
+        System.out.println("2. Registrarse");
+        int opcion = grinch.nextInt();
+        grinch.nextLine();
 
-        System.out.println("Ingrese su usuario");
-        String usuario=grinch.nextLine();
-        System.out.println("Ingrese su contraseña");
-        String contraseña= grinch.nextLine();
-        if(usuario.equals(credenciales[1])&&contraseña.equals(credenciales[2])){
+        switch (opcion) {
+            case 1:
+                iniciarSesion();
+                break;
+            case 2:
+                registrarse();
+                break;
+            default:
+                System.out.println("Opción no válida");
+                MenuPrincipal();
+                break;
+        }
+    }
+
+    public void iniciarSesion() {
+        System.out.println("Ingrese su correo:");
+        String correo = grinch.nextLine();
+        System.out.println("Ingrese su contraseña:");
+        String contraseña = grinch.nextLine();
+
+        if (correo.equals(credenciales[1]) && contraseña.equals(credenciales[2])) {
+            System.out.println("---------Bienvenido a la pastelería-----------");
+            mostrarMenuPrincipal();
+        } else {
+            System.out.println("Correo/Contraseña no válidos");
+            MenuPrincipal();
+        }
+    }
+
+
+
+
+    public void registrarse() {
+        System.out.println("Ingrese su nombre:");
+        credenciales[0] = grinch.nextLine();
+        System.out.println("Ingrese su correo:");
+        credenciales[1] = grinch.nextLine();
+        System.out.println("Ingrese su contraseña:");
+        credenciales[2] = grinch.nextLine();
+        System.out.println("Registro exitoso. Ahora puede iniciar sesión.");
+        MenuPrincipal();
+    }
+
+
+
+
+
+    public String mostrarMenuPrincipal(){
+
             System.out.println("---------Bienvenido a la pasteleria-----------");
             System.out.println("Marque alguna de las siguientes opciones");
             System.out.println(" 1.- TORTA Y PASTELES");
@@ -65,9 +115,6 @@ public class torta {
                     break;
 
             }
-        }
-        else {
-            System.out.println("Usuario/Contraseña no válidos");}
 
 
 
@@ -120,6 +167,11 @@ public class torta {
 
     }
 
+
+
+
+
+
     public void PagoMenus() {
         System.out.println("----BOLETA DE VENTA---------");
         System.out.println("Detalles de su compra:");
@@ -131,7 +183,7 @@ public class torta {
                 System.out.println("Tamaño: " + nombresTamanos[carritoTamano[i]]);
 
                 System.out.println("Cantidad: " + carrito[i]);
-                System.out.println("subtotal: " + precioItem);
+                System.out.println("precio sin igv: " + precioItem);
                 System.out.println("                                                                                                    \n" +
                         "                                          .. .. ......                                             \n" +
                         "                                  ...............::::.................                             \n" +
@@ -174,15 +226,65 @@ public class torta {
                         "                                                                                                    ");
             }
         }
+
+
+
+
+
         for (int i = 0; i < extras.length; i++) {
             if (carrito_extra[i] > 0) {
                 double precioItem = carrito_extra[i] * preciosExtras[i];
                 System.out.println("Extra: " + extras[i]);
                 System.out.println("Cantidad: " + carrito_extra[i]);
-                System.out.println("Precio: " + precioItem);
+                System.out.println("Precio SIN IGV: " + precioItem);
+                System.out.println("                                                                                                    \n" +
+                        "                                                                                                    \n" +
+                        "                                                                                                    \n" +
+                        "                                                                                                    \n" +
+                        "                                                                                                    \n" +
+                        "                                                                                                    \n" +
+                        "                                                                                                    \n" +
+                        "                                                         ...........................                \n" +
+                        "                                                         .....:-=====+======--::....                \n" +
+                        "                                            ........:-=====++=+========-========-===:.....          \n" +
+                        "                                         ......:-+++++++++=+=+++++++====++++=---=---===-:....       \n" +
+                        "                                         ...-=+++==============-=-=-=+===========----=====:..       \n" +
+                        "                                ........:===========------==--=--==----========-==----======....    \n" +
+                        "                                .....-+=====+++++++======----::--::---=========--===----=====:..    \n" +
+                        "                            ....:-====+=====++++++++++========---::::::-----==========-----===-.    \n" +
+                        "                            ..-=++++++++++++++++++=+==--=-==-======--::::-----===--====-----===-    \n" +
+                        "                   .......-=+++++++++==++*+===============--=-=---=--==-::::----==----===---=---:...\n" +
+                        "                ......-++++===+=====-------=---=====----=--------=-----==--::----------===-------...\n" +
+                        "                ...:=++++======-----------------===----------------------=-==-:--------==-------:...\n" +
+                        "            .....-+++===+=++++===----------::::::--=---=-==---------------------::--------------....\n" +
+                        "            ....+++++++++++++=======-===---:::::::::----=--=----------------------:------------.....\n" +
+                        "         .....:=++++=+++==+========--=-----==----::::::----=---------------------------------:..    \n" +
+                        "         ...:===++++==============-=-------------------::----------------------------------:....    \n" +
+                        "      ....:-==+++++======++=======------------:-----------=--::-::-------------:----------...       \n" +
+                        "      ...-++++++++*++++===++====-------------------------------:-:::--------------------.....       \n" +
+                        "      .:++++++++*++++==++======----------------------------------:::::---------:-----:....          \n" +
+                        "   ...-+*++*++++===+===========------------------------------------:::--:----::---........          \n" +
+                        "   ..=++++====---==-----==--==--==-------------------------------:::-:::----:--.....                \n" +
+                        "   .=++=+======---=---------::---====----------------------------------:----:...                    \n" +
+                        "   -+*+*****++++======--:-:::::--------------------------------------:--::......                    \n" +
+                        "...++********++***++======--::::::::-------------------------------:--:...                          \n" +
+                        "...=********+***++++++++++===-----::::::::----------------------:--:......                          \n" +
+                        "...-+******++++++++++++++=============--:::---------------:::---:...                                \n" +
+                        "....-+++*+*++++++++=================-------------------::---:.......                                \n" +
+                        "   ..-=++++++++++==========--==-----------------------==:....                                       \n" +
+                        "   ...:==++++++==========------------------------++=:..                                             \n" +
+                        "   ....:-================------------------===-:.......                                             \n" +
+                        "      ...-+============--------------=++=-:.....                                                    \n" +
+                        "      .....-*##*=-----------:--=**+-:......... .                                                    \n" +
+                        "         ......:-=+******++-::......                                                                \n" +
+                        "         ...........................                                                                \n" +
+                        "                                                                                                    \n" +
+                        "                                                                                                    \n" +
+                        "                                                                                                    ");
             }
         }
-        subtotal = Arrays.stream(carrito).mapToDouble(i -> (preciosTortas[i] + preciosTamanos[carritoTamano[i]]) * i).sum() +
+
+    subtotal = Arrays.stream(carrito).mapToDouble(i -> (preciosTortas[i] + preciosTamanos[carritoTamano[i]]) * i).sum() +
                 Arrays.stream(subtotal_extra).sum();
 
         igv = subtotal * precio[1];
@@ -190,6 +292,8 @@ public class torta {
         System.out.println("SUBTOTAL: " + subtotal);
         System.out.println("IGV: " + igv);
         System.out.println("TOTAL: " + totalpagar);
+
+
 
         System.out.println("Seleccione su método de pago");
         System.out.println("Opción 1: Efectivo");
@@ -232,6 +336,9 @@ public class torta {
 
         ExportarBoleta();
     }
+
+
+
     public String ComprarExtra(){
         System.out.println("------ MENÚS DEL DÍA------------");
         System.out.println( "Seleccione su extra a comprar");
@@ -276,6 +383,8 @@ public class torta {
         return null;
     }
 
+
+
     public void ExportarBoleta() {
         try {
             FileWriter writer = new FileWriter("boleta.txt");
@@ -287,7 +396,7 @@ public class torta {
                     writer.write("Torta: " + tortas[i] + "\n");
                     writer.write("Tamaño: " + nombresTamanos[carritoTamano[i]] + "\n");
                     writer.write("Cantidad: " + carrito[i] + "\n");
-                    writer.write("Precio: " + precioItem + "\n");
+                    writer.write("Precio sin igv: " + precioItem + "\n");
                 }
             }
             for (int i = 0; i < extras.length; i++) {
@@ -295,7 +404,7 @@ public class torta {
                     double precioItem = carrito_extra[i] * preciosExtras[i];
                     writer.write("Extra: " + extras[i] + "\n");
                     writer.write("Cantidad: " + carrito_extra[i] + "\n");
-                    writer.write("Precio: " + precioItem + "\n");
+                    writer.write("Precio sin igv: " + precioItem + "\n");
                 }
             }
 
@@ -309,6 +418,12 @@ public class torta {
             e.printStackTrace();
         }
     }
+
+
+
+
+
+
 
     public static void main(String [] args){
         torta papanoel= new torta();
