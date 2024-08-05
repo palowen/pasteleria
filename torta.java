@@ -72,7 +72,7 @@ public class torta {
 
 
     public void registrarse() {
-        System.out.println("Ingrese su nombre:");
+        System.out.println("Ingrese su nombre y apellido:");
         credenciales[0] = grinch.nextLine();
         System.out.println("Ingrese su correo:");
         credenciales[1] = grinch.nextLine();
@@ -415,6 +415,7 @@ public class torta {
             FileWriter writer = new FileWriter("boleta.txt");
             writer.write("----BOLETA DE VENTA---------\n");
             writer.write("Detalles de su compra:\n");
+            writer.write("Nombre:" + credenciales[0] + "\n");
             for (int i = 0; i < tortas.length; i++) {
                 if (carrito[i] > 0) {
                     double precioItem = (preciosTortas[i] + preciosTamanos[carritoTamano[i]]) * carrito[i];
