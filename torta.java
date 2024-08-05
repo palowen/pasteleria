@@ -1,4 +1,3 @@
-import java.io.File;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Arrays;
@@ -87,39 +86,65 @@ public class torta {
 
 
 
+
+
+
+
     public String mostrarMenuPrincipal(){
 
-            System.out.println("---------Bienvenido a la pasteleria-----------");
-            System.out.println("Marque alguna de las siguientes opciones");
-            System.out.println(" 1.- TORTA Y PASTELES");
-            System.out.println(" 2.- panaderia");
-            System.out.println(" 3.- Libro de reclamaciones");
-            opcion=grinch.nextInt();
-            grinch.nextLine();
-            switch (opcion){
-                case 1:
-                    this.Comprartorta();
-                    break;
+        System.out.println("---------Bienvenido a la pasteleria-----------");
+        System.out.println("Marque alguna de las siguientes opciones");
+        System.out.println(" 1.- TORTA Y PASTELES");
+        System.out.println(" 2.- panaderia");
+        System.out.println(" 3.- Libro de reclamaciones");
+        opcion=grinch.nextInt();
+        grinch.nextLine();
+        switch (opcion){
+            case 1:
+                this.Comprartorta();
+                break;
 
-                case 2:
-                    this.ComprarExtra();
-                    break;
+            case 2:
+                this.ComprarExtra();
+                break;
 
-                case 3:
+            case 3:
+                this.libro();
 
-                    break;
+                break;
 
-                default:
-                    System.out.println("Opcion no válida");
-                    this.MenuPrincipal();
-                    break;
+            default:
+                System.out.println("Opcion no válida");
+                this.MenuPrincipal();
+                break;
 
-            }
+        }
 
 
 
 
         return null;
+    }
+
+
+    public void libro() {
+        System.out.println("---------Libro de Reclamaciones-----------");
+        System.out.println("Por favor, ingrese su queja o comentario:");
+        String comentario = grinch.nextLine();
+
+        try {
+            FileWriter writer = new FileWriter("reclamaciones.txt", true);
+            writer.write("Comentario de " + credenciales[0] + " (" + credenciales[1] + "):\n");
+            writer.write(comentario + "\n");
+            writer.write("------------------------------\n");
+            writer.close();
+            System.out.println("Su comentario ha sido registrado exitosamente.");
+        } catch (IOException e) {
+            System.out.println("Ocurrió un error al registrar su comentario.");
+            e.printStackTrace();
+        }
+
+        mostrarMenuPrincipal();
     }
 
 
@@ -284,7 +309,7 @@ public class torta {
             }
         }
 
-    subtotal = Arrays.stream(carrito).mapToDouble(i -> (preciosTortas[i] + preciosTamanos[carritoTamano[i]]) * i).sum() +
+        subtotal = Arrays.stream(carrito).mapToDouble(i -> (preciosTortas[i] + preciosTamanos[carritoTamano[i]]) * i).sum() +
                 Arrays.stream(subtotal_extra).sum();
 
         igv = subtotal * precio[1];
@@ -432,5 +457,7 @@ public class torta {
 
 
 
+
     }
 }
+
